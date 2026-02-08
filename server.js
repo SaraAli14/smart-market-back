@@ -11,7 +11,7 @@ app.use(express.json());
 app.use("/uploads", express.static("uploads"));
 
 // Routes
-const productRoutes = require("./routes/products");
+const productRoutes = require("./routes/Products");
 app.use("/api/products", productRoutes);
 
 // MongoDB connection
