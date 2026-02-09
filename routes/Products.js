@@ -23,6 +23,23 @@ router.get("/", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+router.get("/search", async (req, res) => {
+  try {
+    const text = req.query.q;
+    if (!text) return res.json([]);
+
+    const products = await Product.find({
+      $or: [
+        { "name.en": { $regex: text, $options: "i" } },
+        { "name.ar": { $regex: text, $options: "i" } },
+      ],
+    });
+
+    res.json(products);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 // GET product by id
 router.get("/:id", async (req, res) => {
